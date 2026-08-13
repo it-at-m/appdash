@@ -1,0 +1,398 @@
+openapi: 3.0.4
+info:
+  title: appdash-backend
+  description: This is the appdash backend based on the reference architecture of it@M
+  version: 0.0.1-SNAPSHOT
+
+servers:
+  - url: /
+
+tags:
+  - name: Apps
+    description: Ralated to apps
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/v1/apps:
+    get:
+      tags:
+        - Apps
+      operationId: getAllApps
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Page index (default is 0)
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          description: Size of the page to be returned (default is 20)
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AppResponseDTO"
+    post:
+      tags:
+        - Apps
+      operationId: createApp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppRequestDTO"
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppResponseDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  /api/v1/apps/{id}:
+    get:
+      tags:
+        - Apps
+      operationId: getAppById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppResponseDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    put:
+      tags:
+        - Apps
+      operationId: updateApp
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppRequestDTO"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppResponseDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    delete:
+      tags:
+        - Apps
+      operationId: deleteApp
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: bearerAuth
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Invalid input provided
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InternalServerError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+        - timestamp
+      properties:
+        error:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+        timestamp:
+          type: string
+          format: date-time
+        traceId:
+          type: string
+          description: Unique identifier for error tracing
+
+    AppRequestDTO:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+        img:
+          type: string
+        mdm:
+          type: string
+        creator:
+          type: string
+        description:
+          type: string
+        infoUrl:
+          type: string
+        infoCustomer:
+          type: string
+        trend:
+          type: integer
+          format: int32
+        numberOfUsers:
+          type: string
+        bundleId:
+          type: string
+        appstoreId:
+          type: string
+        eKey:
+          type: string
+        epicKey:
+          type: string
+        rsmKey:
+          type: string
+        isPilot:
+          type: boolean
+        isCritical:
+          type: boolean
+        # Timestamps
+        dateAdded:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        lastStatusChange:
+          type: string
+          format: date-time
+        lastAppUpdate:
+          type: string
+          format: date-time
+        dateTracking:
+          type: string
+          format: date-time
+        lastAppControl:
+          type: string
+          format: date-time
+        # Foreign Keys
+        clientId:
+          type: integer
+          format: int64
+        softwareTypeId:
+          type: integer
+          format: int64
+        softwareNatureId:
+          type: integer
+          format: int64
+        priorityId:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        referatId:
+          type: integer
+          format: int64
+        mbucId:
+          type: integer
+          format: int64
+        osId:
+          type: integer
+          format: int64
+        statusId:
+          type: integer
+          format: int64
+        laneId:
+          type: integer
+          format: int64
+        sourceId:
+          type: integer
+          format: int64
+        visibilityId:
+          type: integer
+          format: int64
+
+    AppResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        img:
+          type: string
+        mdm:
+          type: string
+        creator:
+          type: string
+        description:
+          type: string
+        infoUrl:
+          type: string
+        infoCustomer:
+          type: string
+        trend:
+          type: integer
+          format: int32
+        numberOfUsers:
+          type: string
+        bundleId:
+          type: string
+        appstoreId:
+          type: string
+        eKey:
+          type: string
+        epicKey:
+          type: string
+        rsmKey:
+          type: string
+        isPilot:
+          type: boolean
+        isCritical:
+          type: boolean
+        # Timestamps
+        timestampCreated:
+          type: string
+          format: date-time
+        timestampUpdated:
+          type: string
+          format: date-time
+        dateAdded:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        lastStatusChange:
+          type: string
+          format: date-time
+        lastAppUpdate:
+          type: string
+          format: date-time
+        dateTracking:
+          type: string
+          format: date-time
+        lastAppControl:
+          type: string
+          format: date-time
+        # Foreign Keys
+        clientId:
+          type: integer
+          format: int64
+        softwareTypeId:
+          type: integer
+          format: int64
+        softwareNatureId:
+          type: integer
+          format: int64
+        priorityId:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        referatId:
+          type: integer
+          format: int64
+        mbucId:
+          type: integer
+          format: int64
+        osId:
+          type: integer
+          format: int64
+        statusId:
+          type: integer
+          format: int64
+        laneId:
+          type: integer
+          format: int64
+        sourceId:
+          type: integer
+          format: int64
+        visibilityId:
+          type: integer
+          format: int64

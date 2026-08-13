@@ -1,0 +1,134 @@
+spring:
+  main:
+    lazy-initialization: true
+    banner-mode: console
+  application:
+    name: "@project.artifactId@"
+    group: "@project.groupId@"
+    version: "@project.version@"
+  data:
+    web:
+      pageable:
+        serialization-mode: via_dto
+  jpa:
+    hibernate:
+      # schema is managed by Flyway, only validate
+      ddl-auto: validate
+    open-in-view: false # Disable OSIV
+    properties:
+      hibernate:
+        default_batch_fetch_size: 50
+        jdbc:
+          batch_size: 30
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+  flyway:
+    locations:
+      - classpath:db/migration/schema
+  web:
+    error:
+      whitelabel:
+        enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          authority-prefix: "ROLE_"
+          authorities-claim-expressions: "['resource_access']['${refarch.security.client-id}']['roles']"
+  threads:
+    virtual:
+      enabled: true
+  task:
+    scheduling:
+      pool:
+        size: 1
+      thread-name-prefix: scheduler-
+      shutdown:
+        await-termination: true
+        await-termination-period: 2m
+    execution:
+      pool:
+        core-size: 4
+        max-size: 8
+        queue-capacity: 50
+      thread-name-prefix: app-async-
+      shutdown:
+        await-termination: true
+        await-termination-period: 12m
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 800MB
+      max-request-size: 800MB
+
+server:
+  shutdown: graceful
+  error:
+    include-exception: false
+    include-stacktrace: never
+
+# Config for spring actuator endpoints
+management:
+  endpoints:
+    access:
+      default: none
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - prometheus
+          - sbom
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      access: read_only
+    info:
+      access: read_only
+    prometheus:
+      access: read_only
+    sbom:
+      access: read_only
+  info:
+    env:
+      enabled: true
+  otlp:
+    metrics:
+      export:
+        enabled: false
+
+springdoc:
+  show-actuator: true
+  # Disable swagger-ui as default
+  swagger-ui:
+    enabled: false
+  api-docs:
+    version: openapi_3_0
+    enabled: false
+
+logging:
+  level:
+    root: info
+  structured:
+    format:
+      console: logstash
+    json:
+      stacktrace:
+        root: first
+        # default max size of one log line in docker is 16kb - UTF8 ~ 1 Character = 1 Byte
+        # therefore limit stack traces to a maximum of 8192 characters (to leave room for the rest of the message)
+        max-length: 8192
+      add:
+        application_name: ${spring.application.name}
+        application_group: ${spring.application.group}
+
+info:
+  application:
+    name: ${spring.application.name}
+    version: ${spring.application.version}
+    group: ${spring.application.group}
+    description: "@project.description@"
+  build:
+    java.version: "@java.version@"
