@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    kubernetes:
+      enabled: false
+      leader:
+        enabled: false
+
+appcenter:
+  network:
+    logging:
+      enabled: true

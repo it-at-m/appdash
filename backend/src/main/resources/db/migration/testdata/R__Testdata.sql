@@ -1,1 +1,1 @@
-truncate app;
+truncate app CASCADE;

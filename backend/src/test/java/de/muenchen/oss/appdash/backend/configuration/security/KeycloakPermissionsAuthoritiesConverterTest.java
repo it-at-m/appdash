@@ -67,9 +67,10 @@ class KeycloakPermissionsAuthoritiesConverterTest {
                 "rsname", ROLE_USER),
             Map.of("rsid", UUID.randomUUID().toString(), "rsname", ROLE_ADMIN));
 
-    RestClient.RequestBodyUriSpec requestBodyUriSpec = mock(RestClient.RequestBodyUriSpec.class);
-    RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
-    RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
+    final RestClient.RequestBodyUriSpec requestBodyUriSpec =
+        mock(RestClient.RequestBodyUriSpec.class);
+    final RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
+    final RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
 
     when(restClient.post()).thenReturn(requestBodyUriSpec);
     when(requestBodyUriSpec.uri(PERMISSIONS_URI)).thenReturn(requestBodySpec);
@@ -97,9 +98,10 @@ class KeycloakPermissionsAuthoritiesConverterTest {
 
     final List<Map<String, Object>> response = List.of();
 
-    RestClient.RequestBodyUriSpec requestBodyUriSpec = mock(RestClient.RequestBodyUriSpec.class);
-    RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
-    RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
+    final RestClient.RequestBodyUriSpec requestBodyUriSpec =
+        mock(RestClient.RequestBodyUriSpec.class);
+    final RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
+    final RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
 
     when(restClient.post()).thenReturn(requestBodyUriSpec);
     when(requestBodyUriSpec.uri(PERMISSIONS_URI)).thenReturn(requestBodySpec);

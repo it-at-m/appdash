@@ -26,7 +26,7 @@ public class TestSecurityConfiguration {
 
   @Bean
   public JwtDecoder mockedJwtDecoder() {
-    JwtDecoder mockedJwtDecoder = Mockito.mock(JwtDecoder.class);
+    final JwtDecoder mockedJwtDecoder = Mockito.mock(JwtDecoder.class);
 
     MOCKED_ROLES.forEach(
         role -> {
@@ -36,7 +36,7 @@ public class TestSecurityConfiguration {
     return mockedJwtDecoder;
   }
 
-  private Jwt jwtWithRole(String role) {
+  private Jwt jwtWithRole(final String role) {
     return Jwt.withTokenValue(role)
         .header("alg", "none")
         .claim(

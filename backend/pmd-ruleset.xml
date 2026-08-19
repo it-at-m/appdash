@@ -9,5 +9,8 @@
     <rule ref="refarch-pmd-ruleset.xml">
         <exclude name="ShortClassName" />
         <exclude name="TooManyFields" />
+        <exclude name="ControlStatementBraces" />
+        <exclude name="AvoidLiteralsInIfCondition" />
+        <exclude name="CognitiveComplexity" />
     </rule>
 </ruleset>

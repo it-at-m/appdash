@@ -16,7 +16,7 @@ public class TestClassesEndWithTestCondition extends ArchCondition<JavaMethod> {
       new TestClassesEndWithTestCondition();
 
   @Override
-  public void check(JavaMethod method, ConditionEvents events) {
+  public void check(final JavaMethod method, final ConditionEvents events) {
     final var topEnclosingClass = getTopEnclosingClass(method.getOwner());
 
     if (!topEnclosingClass.getSimpleName().endsWith("Test")) {

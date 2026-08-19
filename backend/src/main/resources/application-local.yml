@@ -2,6 +2,8 @@ server:
   port: 8086
 
 spring:
+  config:
+    import: "optional:file:.env.local[.properties]"
   cloud:
     kubernetes:
       enabled: false
@@ -14,10 +16,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    password: admin
-    username: admin
   flyway:
     locations:
       - classpath:db/migration/schema
@@ -72,3 +70,8 @@ refarch:
     logging-mode: all
     client-id: ${sso.client}
     permissions-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/token
+
+appcenter:
+  network:
+    logging:
+      enabled: true

@@ -4,6 +4,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  cloud:
+    kubernetes:
+      enabled: false
+      leader:
+        enabled: false
 
 logging:
   include-application-group: false # disabled because application group is only relevant when deployed

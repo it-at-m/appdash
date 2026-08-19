@@ -1,4 +1,4 @@
-package de.muenchen.oss.appdash.backend.configuration;
+package de.muenchen.oss.appdash.backend.configuration.application;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import java.util.concurrent.TimeUnit;
@@ -8,21 +8,21 @@ import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableCaching
-public class CacheConfig {
+public final class CacheConfiguration {
   public static final String REFERENCE_DATA = "referenceData";
 
   @Bean
   public CacheManager cacheManager() {
-    final CaffeineCacheManager cacheManager = new CaffeineCacheManager(REFERENCE_DATA);
+    final CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager(REFERENCE_DATA);
 
-    cacheManager.setCaffeine(
+    caffeineCacheManager.setCaffeine(
         Caffeine.newBuilder()
             .expireAfterWrite(10, TimeUnit.MINUTES)
             .maximumSize(1000)
             .recordStats());
 
-    return cacheManager;
+    return caffeineCacheManager;
   }
 }

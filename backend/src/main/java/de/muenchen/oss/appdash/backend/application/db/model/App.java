@@ -1,5 +1,6 @@
 package de.muenchen.oss.appdash.backend.application.db.model;
 
+import de.muenchen.oss.appdash.backend.Constants;
 import de.muenchen.oss.appdash.backend.common.BaseLongEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,18 +24,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class App extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
-  public static final String COLUMN_TYPE_TEXT = "TEXT";
-
-  @Column(name = "img", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "img", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String img;
 
-  @Column(name = "mdm", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "mdm", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String mdm;
 
-  @Column(name = "name", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "name", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String name;
 
-  @Column(name = "creator", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "creator", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String creator;
 
   @CreationTimestamp
@@ -63,34 +62,34 @@ public class App extends BaseLongEntity {
   @Column(name = "last_app_control")
   private Instant lastAppControl;
 
-  @Column(name = "description", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "description", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String description;
 
-  @Column(name = "info_url", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "info_url", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String infoUrl;
 
-  @Column(name = "info_customer", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "info_customer", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String infoCustomer;
 
   @Column(name = "trend")
   private Integer trend;
 
-  @Column(name = "number_of_users", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "number_of_users", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String numberOfUsers;
 
-  @Column(name = "bundle_id", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "bundle_id", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String bundleId;
 
-  @Column(name = "appstore_id", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "appstore_id", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String appstoreId;
 
-  @Column(name = "e_key", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "e_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String eKey;
 
-  @Column(name = "epic_key", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "epic_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String epicKey;
 
-  @Column(name = "rsm_key", columnDefinition = COLUMN_TYPE_TEXT)
+  @Column(name = "rsm_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String rsmKey;
 
   @Column(name = "is_pilot")

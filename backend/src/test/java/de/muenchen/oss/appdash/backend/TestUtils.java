@@ -44,15 +44,15 @@ public final class TestUtils {
   }
 
   private static String removeImageTag(final String imageName) {
-    final int digestSeparator = imageName.indexOf("@");
+    final int digestSeparator = imageName.indexOf('@');
 
     if (digestSeparator >= 0) {
       final String repository = imageName.substring(0, digestSeparator);
       final String digest = imageName.substring(digestSeparator);
 
       // Remove the tag from the repository, if present.
-      final int tagSeparator = repository.lastIndexOf(":");
-      final int pathSeparator = repository.lastIndexOf("/");
+      final int tagSeparator = repository.lastIndexOf(':');
+      final int pathSeparator = repository.lastIndexOf('/');
       final String imageWithoutTag =
           tagSeparator > pathSeparator ? repository.substring(0, tagSeparator) : repository;
 

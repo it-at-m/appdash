@@ -13,22 +13,32 @@ changes:
       name: none
       password: "none"
   - addUser:
-      name: reader
-      lastName: reader
-      firstName: reader
+      name: user
+      lastName: user
+      firstName: user
       enabled: true
       emailVerified: true
-      email: reader@reader.com
+      email: user@user.com
   - updateUserPassword:
-      name: reader
-      password: "reader"
+      name: user
+      password: "user"
   - addUser:
-      name: writer
-      lastName: writer
-      firstName: writer
+      name: betrieb
+      lastName: betrieb
+      firstName: betrieb
       enabled: true
       emailVerified: true
-      email: writer@writer.com
+      email: betrieb@betrieb.com
   - updateUserPassword:
-      name: writer
-      password: "writer"
+      name: betrieb
+      password: "betrieb"
+  - addUser:
+      name: admin
+      lastName: admin
+      firstName: admin
+      enabled: true
+      emailVerified: true
+      email: admin@admin.com
+  - updateUserPassword:
+      name: admin
+      password: "admin"

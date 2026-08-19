@@ -54,6 +54,8 @@
         <spotbugs-annotations.version>4.10.3</spotbugs-annotations.version> <!-- must match the patch
         version of spotbugs-maven-plugin -->
         <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
+        <rewrite-maven-plugin.version>6.46.1</rewrite-maven-plugin.version>
+        <rewrite-static-analysis.version>2.41.0</rewrite-static-analysis.version>
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
@@ -91,6 +93,7 @@
         <refarch-s3-integration-starter.version>3.0.0</refarch-s3-integration-starter.version>
         <jsoup.version>1.23.1</jsoup.version>
         <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
+        <refarch-s3-integration-starter.version>4.0.0</refarch-s3-integration-starter.version>
 
         <!-- TEMPORARY TRANSITIVE DEPENDENCY OVERRIDES FOR SECURITY FIXES -->
         <!-- Preferably override properties defined in spring-boot-starter ->
@@ -273,6 +276,23 @@
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
         </dependency>
+
+        <!-- Mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- S3 -->
+        <dependency>
+            <groupId>de.muenchen.oss.refarch</groupId>
+            <artifactId>refarch-s3-integration-starter</artifactId>
+            <version>${refarch-s3-integration-starter.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -327,6 +347,9 @@
                                 <compilerArg>
                                     -Amapstruct.defaultComponentModel=spring
                                 </compilerArg>
+                                <compilerArg>
+                                    -Amapstruct.unmappedTargetPolicy=ERROR
+                                </compilerArg>
                             </compilerArgs>
                         </configuration>
                     </execution>
@@ -368,6 +391,7 @@
                                 <useSpringBoot3>true</useSpringBoot3>
                                 <useJakartaEe>true</useJakartaEe>
                                 <dateLibrary>java8</dateLibrary>
+                                <useRecords>true</useRecords>
 
                                 <!-- Clean Code settings -->
                                 <openApiNullable>false</openApiNullable>
@@ -460,6 +484,7 @@
                             <include>src/test/java/**/*.java</include> <!-- Check application tests
                             code -->
                         </includes>
+                        <cleanthat />
                         <googleJavaFormat>
                             <version>1.35.0</version>
                             <style>GOOGLE</style>
@@ -546,6 +571,24 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.openrewrite.maven</groupId>
+                <artifactId>rewrite-maven-plugin</artifactId>
+                <version>${rewrite-maven-plugin.version}</version>
+                <configuration>
+                    <activeRecipes>
+                        <recipe>org.openrewrite.staticanalysis.FinalizeLocalVariables</recipe>
+                        <recipe>org.openrewrite.staticanalysis.FinalizeMethodArguments</recipe>
+                    </activeRecipes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openrewrite.recipe</groupId>
+                        <artifactId>rewrite-static-analysis</artifactId>
+                        <version>${rewrite-static-analysis.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

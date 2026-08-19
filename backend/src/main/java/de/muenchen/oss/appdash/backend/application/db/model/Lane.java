@@ -1,5 +1,6 @@
 package de.muenchen.oss.appdash.backend.application.db.model;
 
+import de.muenchen.oss.appdash.backend.Constants;
 import de.muenchen.oss.appdash.backend.common.BaseLongEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +19,6 @@ import lombok.Setter;
 public class Lane extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
-  @Column(name = "name", columnDefinition = "TEXT")
+  @Column(name = "name", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String name;
 }

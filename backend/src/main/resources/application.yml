@@ -10,6 +10,10 @@ spring:
     web:
       pageable:
         serialization-mode: via_dto
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    password: ${SPRING_DATASOURCE_USERNAME}
+    username: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
       # schema is managed by Flyway, only validate
@@ -61,6 +65,26 @@ spring:
       enabled: true
       max-file-size: 800MB
       max-request-size: 800MB
+  cloud:
+    kubernetes:
+      enabled: true
+      leader:
+        enabled: true
+  mail:
+    host: ${SPRING_MAIL_HOST:}
+    port: ${SPRING_MAIL_PORT:}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: "true"
+          starttls:
+            enable: "true"
+            required: "true"
+        debug: "false"
 
 server:
   shutdown: graceful
@@ -132,3 +156,29 @@ info:
     description: "@project.description@"
   build:
     java.version: "@java.version@"
+
+refarch:
+  s3:
+    url: ${REFARCH_S3_URL:}
+    access-key: ${REFARCH_S3_ACCESS_KEY:}
+    secret-key: ${REFARCH_S3_SECRET_KEY:}
+
+appcenter:
+  s3:
+    appinsight:
+      bucket: ${APPCENTER_S3_APPINSIGHT_BUCKET:}
+      upload-path: "appinsight"
+      apikey: ${APPCENTER_S3_APPINSIGHT_APIKEY:}
+    togen:
+      bucket: ${APPCENTER_S3_TOGEN_BUCKET:}
+      upload-path: "togen"
+      apikey: ${APPCENTER_S3_TOGEN_APIKEY:}
+  network:
+    connect-timeout: 5s
+    read-timeout: 10s
+    proxy:
+      enabled: ${APPCENTER_NETWORK_PROXY_ENABLED:false}
+      host: ${APPCENTER_NETWORK_PROXY_HOST:}
+      port: ${APPCENTER_NETWORK_PROXY_PORT:80}
+    logging:
+      enabled: false
