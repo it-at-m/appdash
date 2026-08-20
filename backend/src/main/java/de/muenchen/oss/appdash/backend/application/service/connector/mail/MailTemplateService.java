@@ -1,7 +1,7 @@
 package de.muenchen.oss.appdash.backend.application.service.connector.mail;
 
 import de.muenchen.oss.appdash.backend.application.db.model.App;
-import de.muenchen.oss.appdash.backend.application.db.model.File;
+import de.muenchen.oss.appdash.backend.application.db.model.Process;
 import de.muenchen.oss.appdash.backend.application.db.model.Scan;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,18 +31,20 @@ public class MailTemplateService {
     return springTemplateEngine.process("mail/control", context);
   }
 
-  public String generateBodyForTrendDownEmail(final App app, final File file, final Scan scan) {
+  public String generateBodyForTrendDownEmail(
+      final App app, final Process process, final Scan scan) {
     final Context context = new Context();
     context.setVariable("app", app);
-    context.setVariable("file", file);
+    context.setVariable("process", process);
     context.setVariable("scan", scan);
     return springTemplateEngine.process("mail/trend-down", context);
   }
 
-  public String generateBodyForDoneScanEmail(final App app, final File file, final Scan scan) {
+  public String generateBodyForDoneScanEmail(
+      final App app, final Process process, final Scan scan) {
     final Context context = new Context();
     context.setVariable("app", app);
-    context.setVariable("file", file);
+    context.setVariable("process", process);
     context.setVariable("scan", scan);
     return springTemplateEngine.process("mail/scan-done", context);
   }

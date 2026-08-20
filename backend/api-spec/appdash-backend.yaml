@@ -199,6 +199,17 @@ components:
           type: string
           description: Unique identifier for error tracing
 
+    InfoMappingDTO:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+
     AppRequestDTO:
       type: object
       required:
@@ -207,22 +218,11 @@ components:
         name:
           type: string
           minLength: 1
-        img:
-          type: string
-        mdm:
-          type: string
         creator:
           type: string
+        img:
+          type: string
         description:
-          type: string
-        infoUrl:
-          type: string
-        infoCustomer:
-          type: string
-        trend:
-          type: integer
-          format: int32
-        numberOfUsers:
           type: string
         bundleId:
           type: string
@@ -232,60 +232,13 @@ components:
           type: string
         epicKey:
           type: string
-        rsmKey:
-          type: string
-        isPilot:
-          type: boolean
-        isCritical:
-          type: boolean
-        # Timestamps
-        dateAdded:
-          type: string
-          format: date-time
-        lastUpdated:
-          type: string
-          format: date-time
-        lastStatusChange:
-          type: string
-          format: date-time
-        lastAppUpdate:
-          type: string
-          format: date-time
-        dateTracking:
-          type: string
-          format: date-time
-        lastAppControl:
-          type: string
-          format: date-time
-        # Foreign Keys
-        clientId:
-          type: integer
-          format: int64
-        softwareTypeId:
-          type: integer
-          format: int64
-        softwareNatureId:
-          type: integer
-          format: int64
         priorityId:
           type: integer
           format: int64
         categoryId:
           type: integer
           format: int64
-        referatId:
-          type: integer
-          format: int64
         mbucId:
-          type: integer
-          format: int64
-        osId:
-          type: integer
-          format: int64
-        statusId:
-          type: integer
-          format: int64
-        laneId:
           type: integer
           format: int64
         sourceId:
@@ -294,6 +247,14 @@ components:
         visibilityId:
           type: integer
           format: int64
+        customerInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
+        urlInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
 
     AppResponseDTO:
       type: object
@@ -301,24 +262,19 @@ components:
         id:
           type: integer
           format: int64
+        timestampCreated:
+          type: string
+          format: date-time
+        timestampUpdated:
+          type: string
+          format: date-time
         name:
-          type: string
-        img:
-          type: string
-        mdm:
           type: string
         creator:
           type: string
+        img:
+          type: string
         description:
-          type: string
-        infoUrl:
-          type: string
-        infoCustomer:
-          type: string
-        trend:
-          type: integer
-          format: int32
-        numberOfUsers:
           type: string
         bundleId:
           type: string
@@ -328,66 +284,13 @@ components:
           type: string
         epicKey:
           type: string
-        rsmKey:
-          type: string
-        isPilot:
-          type: boolean
-        isCritical:
-          type: boolean
-        # Timestamps
-        timestampCreated:
-          type: string
-          format: date-time
-        timestampUpdated:
-          type: string
-          format: date-time
-        dateAdded:
-          type: string
-          format: date-time
-        lastUpdated:
-          type: string
-          format: date-time
-        lastStatusChange:
-          type: string
-          format: date-time
-        lastAppUpdate:
-          type: string
-          format: date-time
-        dateTracking:
-          type: string
-          format: date-time
-        lastAppControl:
-          type: string
-          format: date-time
-        # Foreign Keys
-        clientId:
-          type: integer
-          format: int64
-        softwareTypeId:
-          type: integer
-          format: int64
-        softwareNatureId:
-          type: integer
-          format: int64
         priorityId:
           type: integer
           format: int64
         categoryId:
           type: integer
           format: int64
-        referatId:
-          type: integer
-          format: int64
         mbucId:
-          type: integer
-          format: int64
-        osId:
-          type: integer
-          format: int64
-        statusId:
-          type: integer
-          format: int64
-        laneId:
           type: integer
           format: int64
         sourceId:
@@ -396,3 +299,11 @@ components:
         visibilityId:
           type: integer
           format: int64
+        customerInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
+        urlInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"

@@ -9,5 +9,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class AppReport {
   private App app;
-  private List<FileReport> fileReports;
+  private List<ProcessReport> processReports;
 }

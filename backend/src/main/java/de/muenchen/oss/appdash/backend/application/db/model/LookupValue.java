@@ -11,14 +11,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "lane")
+@Table(name = "lookup_value")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lane extends BaseLongEntity {
+public class LookupValue extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
-  @Column(name = "name", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  @Column(name = "type", nullable = false, columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String type;
+
+  @Column(name = "name", nullable = false, columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String name;
 }

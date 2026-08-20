@@ -26,12 +26,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Scan extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
-  @Column(name = "scan_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String scanKey;
-
-  @Column(name = "score")
-  private Integer score;
-
   @CreationTimestamp
   @Column(name = "timestamp_created")
   private Instant timestampCreated;
@@ -40,12 +34,31 @@ public class Scan extends BaseLongEntity {
   @Column(name = "timestamp_updated")
   private Instant timestampUpdated;
 
+  @Column(name = "scan_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String scanKey;
+
+  @Column(name = "size", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String size;
+
+  @Column(name = "version", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String version;
+
+  @Column(name = "score")
+  private Integer score;
+
+  @Column(name = "cnt_files")
+  private Integer cntFiles;
+
   @ManyToOne
-  @JoinColumn(name = "file_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
-  private File file;
+  @JoinColumn(name = "file_type_id")
+  private LookupValue fileType;
 
   @ManyToOne
   @JoinColumn(name = "provider_id")
-  private Provider provider;
+  private LookupValue provider;
+
+  @ManyToOne
+  @JoinColumn(name = "process_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Process process;
 }

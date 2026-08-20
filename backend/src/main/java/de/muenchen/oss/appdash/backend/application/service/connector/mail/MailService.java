@@ -1,7 +1,8 @@
 package de.muenchen.oss.appdash.backend.application.service.connector.mail;
 
 import de.muenchen.oss.appdash.backend.application.db.model.App;
-import de.muenchen.oss.appdash.backend.application.db.model.File;
+import de.muenchen.oss.appdash.backend.application.db.model.LookupValue;
+import de.muenchen.oss.appdash.backend.application.db.model.Process;
 import de.muenchen.oss.appdash.backend.application.db.model.Scan;
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MailService {
-  private static final Set<String> PRODUCTIVE_LANES = Set.of("in review", "erledigt");
+  private static final Set<String> PRODUCTIVE_LANES =
+      Set.of(StateEnum.IN_REVIEW.getValue(), StateEnum.ERLEDIGT.getValue());
 
   private final MailTemplateService templateService;
   private final MailSendService mailSendService;
@@ -41,9 +43,9 @@ public class MailService {
 
     final String body =
         templateService.generateBodyForReportEmail(
-            categorized.getOrDefault("productive", List.of()),
-            categorized.getOrDefault("reviewing", List.of()),
-            categorized.getOrDefault("new", List.of()));
+            categorized.getOrDefault(StateEnum.ERLEDIGT.getValue(), List.of()),
+            categorized.getOrDefault(StateEnum.IN_REVIEW.getValue(), List.of()),
+            categorized.getOrDefault(StateEnum.NEU.getValue(), List.of()));
     final String subject = "Weekly Application Scan Report";
 
     for (final String recipient : recipients) {
@@ -52,10 +54,10 @@ public class MailService {
   }
 
   public void sendTrendDownEmail(
-      final App app, final File file, final Scan scan, final List<String> recipients) {
+      final App app, final Process process, final Scan scan, final List<String> recipients) {
     if (recipients == null || recipients.isEmpty()) return;
 
-    final String body = templateService.generateBodyForTrendDownEmail(app, file, scan);
+    final String body = templateService.generateBodyForTrendDownEmail(app, process, scan);
     final String subject = "ALERT: Downward Trend Detected for " + app.getName();
 
     for (final String recipient : recipients) {
@@ -64,10 +66,10 @@ public class MailService {
   }
 
   public void sendDoneScanEmail(
-      final App app, final File file, final Scan scan, final List<String> recipients) {
+      final App app, final Process process, final Scan scan, final List<String> recipients) {
     if (recipients == null || recipients.isEmpty()) return;
 
-    final String body = templateService.generateBodyForDoneScanEmail(app, file, scan);
+    final String body = templateService.generateBodyForDoneScanEmail(app, process, scan);
     final String subject = "Scan Completed: " + app.getName();
 
     for (final String recipient : recipients) {
@@ -97,20 +99,56 @@ public class MailService {
     }
   }
 
-  private String categorizeReport(final AppReport report) {
-    if (report.getApp() == null) {
-      return "new";
+  public String categorizeReport(final AppReport report) {
+    if (report == null || report.getApp() == null) {
+      return StateEnum.ERLEDIGT.getValue();
     }
-    final String lane =
-        report.getApp().getLane() != null
-            ? report.getApp().getLane().getName().toLowerCase(Locale.ROOT)
-            : "";
-    if (PRODUCTIVE_LANES.contains(lane)) {
-      return "productive";
-    } else if (report.getApp().getTrend() != null) {
-      return "reviewing";
-    } else {
-      return "new";
+
+    final List<ProcessReport> reports = report.getProcessReports();
+    if (reports == null) {
+      return StateEnum.NEU.getValue();
     }
+
+    for (final ProcessReport reportItem : reports) {
+      if (isProductive(reportItem)) {
+        return StateEnum.ERLEDIGT.getValue();
+      }
+    }
+
+    for (final ProcessReport reportItem : reports) {
+      if (isReviewing(reportItem)) {
+        return StateEnum.IN_REVIEW.getValue();
+      }
+    }
+
+    return StateEnum.NEU.getValue();
+  }
+
+  private boolean isProductive(final ProcessReport reportItem) {
+    if (reportItem == null) {
+      return false;
+    }
+
+    final Process process = reportItem.getProcess();
+    if (process == null) {
+      return false;
+    }
+
+    final LookupValue lane = process.getLane();
+    if (lane == null || lane.getName() == null) {
+      return false;
+    }
+
+    final String laneName = lane.getName().toLowerCase(Locale.ROOT);
+    return PRODUCTIVE_LANES.contains(laneName);
+  }
+
+  private boolean isReviewing(final ProcessReport reportItem) {
+    if (reportItem == null) {
+      return false;
+    }
+
+    final Process process = reportItem.getProcess();
+    return process != null && process.getTrend() != null;
   }
 }
