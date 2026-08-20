@@ -1,7 +1,10 @@
-import type { HTTPHeaders } from "@/api/generated/refarch-backend";
+import type {
+  HTTPHeaders,
+  RequestContext,
+} from "@/api/generated/appdash-backend";
 
 import { getHeaders } from "@/api/fetch-utils.ts";
-import { BaseAPI, Configuration } from "@/api/generated/refarch-backend";
+import { BaseAPI, Configuration } from "@/api/generated/appdash-backend";
 import { BASE_API_PATH } from "@/constants.ts";
 
 type ApiCtor<T extends BaseAPI> = new (config: Configuration) => T;
@@ -25,7 +28,7 @@ function createConfig(): Configuration {
     fetchApi: customFetch,
     middleware: [
       {
-        pre: async (context) => {
+        pre: async (context: RequestContext) => {
           const freshHeaders = convertHeaders(getHeaders());
           return {
             url: context.url,

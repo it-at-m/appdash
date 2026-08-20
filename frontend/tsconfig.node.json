@@ -11,6 +11,7 @@
     "tsBuildInfoFile": "./cache/tsconfig.node.tsbuildinfo",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
     "types": ["node"]
   }
 }

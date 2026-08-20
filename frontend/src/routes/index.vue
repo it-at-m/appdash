@@ -38,8 +38,6 @@ import type { HealthState } from "@/types/HealthState";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { ApiFactory } from "@/api/ApiFactory.ts";
-import { ActuatorApi } from "@/api/generated/refarch-backend";
 import { checkHealth } from "@/api/healthstate-client";
 import useHasAnyRole from "@/composables/useHasAnyRole";
 import { STATUS_INDICATORS } from "@/constants";
@@ -67,7 +65,7 @@ onMounted(async () => {
   }
 
   try {
-    const content = await ApiFactory.getInstance(ActuatorApi).health();
+    const content = await checkHealth();
     backendStatus.value = (content as HealthState).status;
   } catch (error) {
     const err = error as Error;
