@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -25,19 +23,19 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <email>opensource@muenchen.de</email>
+            <url>https://github.com/it-at-m</url>
+            <organization>it@M</organization>
+        </developer>
+    </developers>
     <scm>
-        <url>https://github.com/it-at-m/appdash.git</url>
         <connection>scm:git:https://github.com/it-at-m/appdash.git</connection>
         <developerConnection>scm:git:https://github.com/it-at-m/appdash.git</developerConnection>
         <tag>HEAD</tag>
+        <url>https://github.com/it-at-m/appdash.git</url>
     </scm>
-    <developers>
-        <developer>
-            <organization>it@M</organization>
-            <email>opensource@muenchen.de</email>
-            <url>https://github.com/it-at-m</url>
-        </developer>
-    </developers>
 
     <properties>
         <!-- Compilation -->
@@ -51,16 +49,16 @@
         <itm-java-codeformat.version>1.0.10</itm-java-codeformat.version>
         <pmd-maven-plugin.version>3.28.0</pmd-maven-plugin.version>
         <spotbugs-maven-plugin.version>4.10.3.0</spotbugs-maven-plugin.version>
-        <spotbugs-annotations.version>4.10.3</spotbugs-annotations.version> <!-- must match the patch
-        version of spotbugs-maven-plugin -->
+        <!-- spotbugs-annotations.version must match the patch version of spotbugs-maven-plugin.version -->
+        <spotbugs-annotations.version>4.10.3</spotbugs-annotations.version>
         <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
         <rewrite-maven-plugin.version>6.46.1</rewrite-maven-plugin.version>
         <rewrite-static-analysis.version>2.41.0</rewrite-static-analysis.version>
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
-        <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via
-        @{argLine} lazy property evaluation -->
+        <!-- argLine must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <argLine />
         <archunit.version>1.5.0</archunit.version>
 
         <!-- Release -->
@@ -71,8 +69,7 @@
         <refarch-tools.version>1.4.0</refarch-tools.version>
 
         <!-- Additional required dependencies -->
-        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version> <!-- Needed to
-        make MapStruct and Lombok work together -->
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <springdoc-openapi-starter-webmvc-ui.version>3.1.0</springdoc-openapi-starter-webmvc-ui.version>
         <openapi-generator-maven-plugin.version>7.24.0</openapi-generator-maven-plugin.version>
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
@@ -84,8 +81,10 @@
         <flyway.locations>classpath:db/migration/schema,classpath:db/migration/testdata</flyway.locations>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
-        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
-        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.username />
+        <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password />
+        <!-- must be empty, override via Maven settings.xml if needed -->
         <p2.mirror>download.eclipse.org</p2.mirror>
 
         <!-- Required for Tools -->
@@ -98,7 +97,8 @@
         <!-- TEMPORARY TRANSITIVE DEPENDENCY OVERRIDES FOR SECURITY FIXES -->
         <!-- Preferably override properties defined in spring-boot-starter ->
         spring-boot-dependencies POM -->
-        <postgresql.version>42.7.12</postgresql.version> <!-- CVE-2026-54291 -->
+        <!-- CVE-2026-54291 -->
+        <postgresql.version>42.7.12</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -344,12 +344,8 @@
                         <id>default-compile</id>
                         <configuration>
                             <compilerArgs>
-                                <compilerArg>
-                                    -Amapstruct.defaultComponentModel=spring
-                                </compilerArg>
-                                <compilerArg>
-                                    -Amapstruct.unmappedTargetPolicy=ERROR
-                                </compilerArg>
+                                <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+                                <compilerArg>-Amapstruct.unmappedTargetPolicy=ERROR</compilerArg>
                             </compilerArgs>
                         </configuration>
                     </execution>
@@ -418,14 +414,13 @@
                 <executions>
                     <execution>
                         <id>add-openapi-source</id>
-                        <phase>generate-sources</phase>
                         <goals>
                             <goal>add-source</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                         <configuration>
                             <sources>
-                                <source>
-                                    ${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -437,11 +432,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>
-                        @{argLine} -Dfile.encoding=${project.build.sourceEncoding}
+                    <argLine>@{argLine} -Dfile.encoding=${project.build.sourceEncoding}
                         -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
-                        -Xshare:off
-                    </argLine>
+                        -Xshare:off</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -478,11 +471,20 @@
                 <artifactId>spotless-maven-plugin</artifactId>
                 <version>${spotless-maven-plugin.version}</version>
                 <configuration>
+                    <pom>
+                        <sortPom>
+                            <expandEmptyElements>false</expandEmptyElements>
+                            <nrOfIndentSpace>4</nrOfIndentSpace>
+                            <!-- Required for proper Maven release -->
+                            <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
+                        </sortPom>
+                    </pom>
                     <java>
                         <includes>
-                            <include>src/main/java/**/*.java</include> <!-- Check application code -->
-                            <include>src/test/java/**/*.java</include> <!-- Check application tests
-                            code -->
+                            <!-- Check application code -->
+                            <include>src/main/java/**/*.java</include>
+                            <!-- Check application tests code -->
+                            <include>src/test/java/**/*.java</include>
                         </includes>
                         <cleanthat />
                         <googleJavaFormat>
@@ -530,6 +532,13 @@
                         <ruleset>pmd-ruleset.xml</ruleset>
                     </rulesets>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>de.muenchen.oss.refarch</groupId>
+                        <artifactId>refarch-pmd</artifactId>
+                        <version>${refarch-tools.version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <goals>
@@ -538,18 +547,15 @@
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>de.muenchen.oss.refarch</groupId>
-                        <artifactId>refarch-pmd</artifactId>
-                        <version>${refarch-tools.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>${spotbugs-maven-plugin.version}</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <excludeFilterFile>spotbugs-exclude-rules.xml</excludeFilterFile>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>com.h3xstream.findsecbugs</groupId>
@@ -557,10 +563,6 @@
                         <version>${findsecbugs-plugin.version}</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <effort>Max</effort>
-                    <excludeFilterFile>spotbugs-exclude-rules.xml</excludeFilterFile>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
