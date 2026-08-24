@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -71,12 +72,19 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
   }
 
   private static class ApiKeyAuthenticationToken extends AbstractAuthenticationToken {
+    private static final long serialVersionUID = 1L;
+
     private final String apiKey;
 
     public ApiKeyAuthenticationToken(final String apiKey) {
       super(List.of(new SimpleGrantedAuthority("ROLE_API_CLIENT")));
       this.apiKey = apiKey;
       setAuthenticated(true);
+    }
+
+    @Override
+    public final void setAuthenticated(final boolean isAuthenticated) {
+      super.setAuthenticated(isAuthenticated);
     }
 
     @Override
@@ -87,6 +95,28 @@ public class ApiKeyAuthenticationFilter extends OncePerRequestFilter {
     @Override
     public Object getPrincipal() {
       return "api-client";
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+      if (this == obj) {
+        return true;
+      }
+      if (!(obj instanceof ApiKeyAuthenticationToken)) {
+        return false;
+      }
+      if (!super.equals(obj)) {
+        return false;
+      }
+      final ApiKeyAuthenticationToken other = (ApiKeyAuthenticationToken) obj;
+      return Objects.equals(this.apiKey, other.apiKey);
+    }
+
+    @Override
+    public int hashCode() {
+      int result = super.hashCode();
+      result = 31 * result + Objects.hashCode(this.apiKey);
+      return result;
     }
   }
 }

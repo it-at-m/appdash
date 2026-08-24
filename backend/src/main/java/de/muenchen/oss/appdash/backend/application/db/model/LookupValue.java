@@ -20,7 +20,7 @@ public class LookupValue extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
   @Column(name = "type", nullable = false, columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String type;
+  private LookupType type;
 
   @Column(name = "name", nullable = false, columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String name;

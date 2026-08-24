@@ -1,5 +1,6 @@
 package de.muenchen.oss.appdash.backend.application.db.repository;
 
+import de.muenchen.oss.appdash.backend.application.db.model.LookupType;
 import de.muenchen.oss.appdash.backend.application.db.model.LookupValue;
 import de.muenchen.oss.appdash.backend.configuration.application.CacheConfiguration;
 import java.util.List;
@@ -17,10 +18,10 @@ public interface LookupValueRepository extends JpaRepository<LookupValue, Long> 
   Optional<LookupValue> findById(@NonNull Long id);
 
   @Cacheable(CacheConfiguration.REFERENCE_DATA)
-  List<LookupValue> findByType(@NonNull String type);
+  List<LookupValue> findByType(@NonNull LookupType type);
 
   @Cacheable(CacheConfiguration.REFERENCE_DATA)
-  Optional<LookupValue> findByTypeAndName(@NonNull String type, @NonNull String name);
+  Optional<LookupValue> findByTypeAndName(@NonNull LookupType type, @NonNull String name);
 
   @Override
   @NonNull @CacheEvict(value = CacheConfiguration.REFERENCE_DATA, allEntries = true)
