@@ -32,13 +32,13 @@ jobs:
       ARTIFACT_VERSION: ${{ steps.release-npm-artifact.outputs.ARTIFACT_VERSION }}
     steps:
       - id: release-npm-artifact
-        uses: it-at-m/lhm_actions/action-templates/actions/action-npm-release@e9a8422d740d4e9eaef25cfeeb3a5790da97a7aa # v1.2.4
+        uses: it-at-m/lhm_actions/action-templates/actions/action-npm-release@bcd2cb2a470e6de82ba45ce9ede3d2f43560c58a # v1.5.0
         with:
           app-path: ${{ inputs.app-path }}
           releaseVersion: ${{ inputs.release-version }}
           use-pr: "true"
       - id: build
-        uses: it-at-m/lhm_actions/action-templates/actions/action-npm-build@e9a8422d740d4e9eaef25cfeeb3a5790da97a7aa # v1.2.4
+        uses: it-at-m/lhm_actions/action-templates/actions/action-npm-build@bcd2cb2a470e6de82ba45ce9ede3d2f43560c58a # v1.5.0
         with:
           app-path: ${{ inputs.app-path }}
       # necessary to publish to npm registry
@@ -54,16 +54,17 @@ jobs:
     permissions:
       packages: write
     steps:
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@e9a8422d740d4e9eaef25cfeeb3a5790da97a7aa # v1.2.4
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@bcd2cb2a470e6de82ba45ce9ede3d2f43560c58a # v1.5.0
         with:
           path: ${{ inputs.app-path }}
-          image-name: ${{ inputs.app-path }}
           artifact-name: ${{ needs.release-npm-artifact.outputs.ARTIFACT_NAME }}
-          registry-password: ${{ secrets.GITHUB_TOKEN }}
-          registry-username: ${{ github.actor }}
+          image-name: ${{ inputs.app-path }}
           image-tags: |
             type=semver,pattern={{version}},value=${{ needs.release-npm-artifact.outputs.ARTIFACT_VERSION }}
             type=raw,value=latest
+          platforms: "linux/amd64,linux/arm64"
+          registry-password: ${{ secrets.GITHUB_TOKEN }}
+          registry-username: ${{ github.actor }}
 
   release-npm-github:
     needs: release-npm-artifact
@@ -71,7 +72,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@e9a8422d740d4e9eaef25cfeeb3a5790da97a7aa # v1.2.4
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-create-github-release@bcd2cb2a470e6de82ba45ce9ede3d2f43560c58a # v1.5.0
         with:
           artifact-name: ${{ needs.release-npm-artifact.outputs.ARTIFACT_NAME }}
           tag-name: ${{ inputs.app-path }}-${{ needs.release-npm-artifact.outputs.ARTIFACT_VERSION }}
