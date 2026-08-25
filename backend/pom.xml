@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.0</version>
+        <version>4.1.1</version>
         <relativePath />
     </parent>
 
@@ -101,8 +99,6 @@
         <!-- TEMPORARY TRANSITIVE DEPENDENCY OVERRIDES FOR SECURITY FIXES -->
         <!-- Preferably override properties defined in spring-boot-starter ->
         spring-boot-dependencies POM -->
-        <!-- CVE-2026-54291 -->
-        <postgresql.version>42.7.12</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -430,8 +426,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <sources>
-                                <source>
-                                    ${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
                             </sources>
                         </configuration>
                     </execution>

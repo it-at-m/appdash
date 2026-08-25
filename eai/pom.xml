@@ -5,8 +5,11 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <!-- must match the chosen Camel version in properties -> camel-spring-boot-dependencies.version, see e.g. https://central.sonatype.com/artifact/org.apache.camel.springboot/camel-spring-boot/dependencies and search for 'spring-boot-starter' -->
-        <version>4.1.0</version>
+        <!-- must match the chosen Camel version in properties ->
+        camel-spring-boot-dependencies.version, see e.g.
+        https://central.sonatype.com/artifact/org.apache.camel.springboot/camel-spring-boot/dependencies
+        and search for 'spring-boot-starter' -->
+        <version>4.1.1</version>
         <relativePath />
     </parent>
 
@@ -53,13 +56,15 @@
         <itm-java-codeformat.version>1.0.10</itm-java-codeformat.version>
         <pmd-maven-plugin.version>3.28.0</pmd-maven-plugin.version>
         <spotbugs-maven-plugin.version>4.10.3.0</spotbugs-maven-plugin.version>
-        <!-- spotbugs-annotations.version must match the patch version of spotbugs-maven-plugin.version -->
+        <!-- spotbugs-annotations.version must match the patch version of
+        spotbugs-maven-plugin.version -->
         <spotbugs-annotations.version>4.10.3</spotbugs-annotations.version>
         <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
-        <!-- argLine must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <!-- argLine must be empty, definition needed for integration of Jacoco and Surefire via
+        @{argLine} lazy property evaluation -->
         <argLine />
         <archunit.version>1.5.0</archunit.version>
 
