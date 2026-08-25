@@ -9,7 +9,7 @@ servers:
 
 tags:
   - name: Apps
-    description: Ralated to apps
+    description: Related to apps
 
 security:
   - bearerAuth: []
@@ -146,6 +146,34 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+  /api/v1/apps/{id}/history:
+    get:
+      tags:
+        - Apps
+      operationId: getAppHistory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AppRevisionDTO"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -232,6 +260,12 @@ components:
           type: string
         epicKey:
           type: string
+        privacyPolicy:
+          type: string
+        website:
+          type: string
+        isInternal:
+          type: boolean
         priorityId:
           type: integer
           format: int64
@@ -239,9 +273,6 @@ components:
           type: integer
           format: int64
         mbucId:
-          type: integer
-          format: int64
-        sourceId:
           type: integer
           format: int64
         visibilityId:
@@ -252,6 +283,14 @@ components:
           items:
             $ref: "#/components/schemas/InfoMappingDTO"
         urlInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
+        imgInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
+        privacyInfos:
           type: array
           items:
             $ref: "#/components/schemas/InfoMappingDTO"
@@ -284,6 +323,12 @@ components:
           type: string
         epicKey:
           type: string
+        privacyPolicy:
+          type: string
+        website:
+          type: string
+        isInternal:
+          type: boolean
         priorityId:
           type: integer
           format: int64
@@ -291,9 +336,6 @@ components:
           type: integer
           format: int64
         mbucId:
-          type: integer
-          format: int64
-        sourceId:
           type: integer
           format: int64
         visibilityId:
@@ -307,3 +349,27 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/InfoMappingDTO"
+        imgInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
+        privacyInfos:
+          type: array
+          items:
+            $ref: "#/components/schemas/InfoMappingDTO"
+
+    AppRevisionDTO:
+      type: object
+      properties:
+        revisionId:
+          type: integer
+        revisionTimestamp:
+          type: string
+          format: date-time
+        revisionType:
+          type: string
+          enum: [INSERT, UPDATE, DELETE]
+        username:
+          type: string
+        entity:
+          $ref: "#/components/schemas/AppResponseDTO"

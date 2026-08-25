@@ -19,7 +19,6 @@ public interface AppMapper {
   @Mapping(target = "priorityId", source = "priority.id")
   @Mapping(target = "categoryId", source = "category.id")
   @Mapping(target = "mbucId", source = "mbuc.id")
-  @Mapping(target = "sourceId", source = "source.id")
   @Mapping(target = "visibilityId", source = "visibility.id")
   @Mapping(target = "eKey", source = "EKey")
   AppResponseDTO toDto(App entity);
@@ -27,12 +26,13 @@ public interface AppMapper {
   @Mapping(target = "priority", source = "priorityId")
   @Mapping(target = "category", source = "categoryId")
   @Mapping(target = "mbuc", source = "mbucId")
-  @Mapping(target = "source", source = "sourceId")
   @Mapping(target = "visibility", source = "visibilityId")
   @Mapping(target = "EKey", source = "eKey")
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "timestampCreated", ignore = true)
   @Mapping(target = "timestampUpdated", ignore = true)
+  @Mapping(target = "cosus", ignore = true)
+  @Mapping(target = "appGroups", ignore = true)
   App toEntity(AppRequestDTO dto);
 
   @InheritConfiguration(name = "toEntity")

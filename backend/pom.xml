@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -49,7 +51,8 @@
         <itm-java-codeformat.version>1.0.10</itm-java-codeformat.version>
         <pmd-maven-plugin.version>3.28.0</pmd-maven-plugin.version>
         <spotbugs-maven-plugin.version>4.10.3.0</spotbugs-maven-plugin.version>
-        <!-- spotbugs-annotations.version must match the patch version of spotbugs-maven-plugin.version -->
+        <!-- spotbugs-annotations.version must match the patch version of
+        spotbugs-maven-plugin.version -->
         <spotbugs-annotations.version>4.10.3</spotbugs-annotations.version>
         <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
         <rewrite-maven-plugin.version>6.46.1</rewrite-maven-plugin.version>
@@ -57,7 +60,8 @@
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
-        <!-- argLine must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <!-- argLine must be empty, definition needed for integration of Jacoco and Surefire via
+        @{argLine} lazy property evaluation -->
         <argLine />
         <archunit.version>1.5.0</archunit.version>
 
@@ -293,6 +297,12 @@
             <artifactId>refarch-s3-integration-starter</artifactId>
             <version>${refarch-s3-integration-starter.version}</version>
         </dependency>
+
+        <!-- Hibernate Envers -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-envers</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -420,7 +430,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <sources>
-                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                                <source>
+                                    ${project.build.directory}/generated-sources/openapi/src/main/java</source>
                             </sources>
                         </configuration>
                     </execution>

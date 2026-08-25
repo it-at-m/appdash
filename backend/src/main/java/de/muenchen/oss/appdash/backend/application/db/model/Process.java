@@ -1,5 +1,7 @@
 package de.muenchen.oss.appdash.backend.application.db.model;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 import de.muenchen.oss.appdash.backend.Constants;
 import de.muenchen.oss.appdash.backend.common.BaseLongEntity;
 import jakarta.persistence.CollectionTable;
@@ -20,6 +22,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 @Entity
 @Table(name = "process")
@@ -27,15 +31,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Audited
 public class Process extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
   @CreationTimestamp
   @Column(name = "timestamp_created")
+  @NotAudited
   private Instant timestampCreated;
 
   @UpdateTimestamp
   @Column(name = "timestamp_updated")
+  @NotAudited
   private Instant timestampUpdated;
 
   @Column(name = "timestamp_status_updated")
@@ -64,31 +71,33 @@ public class Process extends BaseLongEntity {
 
   @ManyToOne
   @JoinColumn(name = "os_id")
-  private LookupValue os;
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue os;
 
   @ManyToOne
   @JoinColumn(name = "trend_id")
-  private LookupValue trend;
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue trend;
 
   @ManyToOne
   @JoinColumn(name = "number_of_users_id")
-  private LookupValue numberOfUsers;
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue numberOfUsers;
 
   @ManyToOne
   @JoinColumn(name = "status_id")
-  private LookupValue status;
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue status;
 
   @ManyToOne
   @JoinColumn(name = "lane_id")
-  private LookupValue lane;
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue lane;
 
   @ManyToOne
-  @JoinColumn(name = "referat_id")
-  private LookupValue referat;
-
-  @ManyToOne
-  @JoinColumn(name = "client_id")
-  private LookupValue client;
+  @JoinColumn(name = "viv_id")
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue viv;
 
   @ManyToOne
   @JoinColumn(name = "app_id")
@@ -106,4 +115,24 @@ public class Process extends BaseLongEntity {
   @ElementCollection
   @CollectionTable(name = "process_rsm_key_info", joinColumns = @JoinColumn(name = "process_id"))
   private Set<InfoMapping> rsmKeyInfos = new HashSet<>();
+
+  @ElementCollection
+  @CollectionTable(name = "process_comment_info", joinColumns = @JoinColumn(name = "process_id"))
+  private Set<InfoMapping> commentInfos = new HashSet<>();
+
+  @ElementCollection
+  @CollectionTable(name = "process_license_info", joinColumns = @JoinColumn(name = "process_id"))
+  private Set<InfoMapping> license = new HashSet<>();
+
+  @ElementCollection
+  @CollectionTable(name = "process_cloud_info", joinColumns = @JoinColumn(name = "process_id"))
+  private Set<InfoMapping> cloudInfos = new HashSet<>();
+
+  @ElementCollection
+  @CollectionTable(name = "process_client_info", joinColumns = @JoinColumn(name = "process_id"))
+  private Set<InfoMapping> clientInfos = new HashSet<>();
+
+  @ElementCollection
+  @CollectionTable(name = "process_origin_info", joinColumns = @JoinColumn(name = "process_id"))
+  private Set<InfoMapping> originInfos = new HashSet<>();
 }

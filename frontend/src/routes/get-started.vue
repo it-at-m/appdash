@@ -48,7 +48,7 @@ const { t } = useI18n();
 
 definePage({
   meta: {
-    hasAnyRole: [Role.READER, Role.WRITER],
+    hasAnyRole: [Role.USER, Role.BETRIEB, Role.ADMIN],
   },
 });
 

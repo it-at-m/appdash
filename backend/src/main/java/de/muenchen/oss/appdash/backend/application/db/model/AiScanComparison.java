@@ -13,17 +13,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "scan")
+@Table(name = "ai_scan_comparison")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Scan extends BaseLongEntity {
+public class AiScanComparison extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
   @CreationTimestamp
@@ -34,31 +32,26 @@ public class Scan extends BaseLongEntity {
   @Column(name = "timestamp_updated")
   private Instant timestampUpdated;
 
-  @Column(name = "scan_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String scanKey;
+  @Column(name = "libraries", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String libraries;
 
-  @Column(name = "size", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String size;
+  @Column(name = "permissions", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String permissions;
 
-  @Column(name = "version", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String version;
+  @Column(name = "domains", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String domains;
 
-  @Column(name = "score")
-  private Integer score;
+  @Column(name = "general", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String general;
 
-  @Column(name = "cnt_files")
-  private Integer cntFiles;
-
-  @ManyToOne
-  @JoinColumn(name = "file_type_id")
-  private TypeValue fileType;
+  @Column(name = "summary", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String summary;
 
   @ManyToOne
-  @JoinColumn(name = "provider_id")
-  private TypeValue provider;
+  @JoinColumn(name = "scan_one_id", nullable = false)
+  private Scan scanOne;
 
   @ManyToOne
-  @JoinColumn(name = "process_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
-  private Process process;
+  @JoinColumn(name = "scan_two_id", nullable = false)
+  private Scan scanTwo;
 }

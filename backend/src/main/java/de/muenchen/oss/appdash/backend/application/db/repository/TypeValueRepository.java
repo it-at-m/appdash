@@ -1,7 +1,7 @@
 package de.muenchen.oss.appdash.backend.application.db.repository;
 
-import de.muenchen.oss.appdash.backend.application.db.model.LookupType;
-import de.muenchen.oss.appdash.backend.application.db.model.LookupValue;
+import de.muenchen.oss.appdash.backend.application.db.model.TypeEnum;
+import de.muenchen.oss.appdash.backend.application.db.model.TypeValue;
 import de.muenchen.oss.appdash.backend.configuration.application.CacheConfiguration;
 import java.util.List;
 import java.util.Optional;
@@ -12,20 +12,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LookupValueRepository extends JpaRepository<LookupValue, Long> {
+public interface TypeValueRepository extends JpaRepository<TypeValue, Long> {
   @Override
   @NonNull @Cacheable(CacheConfiguration.REFERENCE_DATA)
-  Optional<LookupValue> findById(@NonNull Long id);
+  Optional<TypeValue> findById(@NonNull Long id);
 
   @Cacheable(CacheConfiguration.REFERENCE_DATA)
-  List<LookupValue> findByType(@NonNull LookupType type);
+  List<TypeValue> findByType(@NonNull TypeEnum type);
 
   @Cacheable(CacheConfiguration.REFERENCE_DATA)
-  Optional<LookupValue> findByTypeAndName(@NonNull LookupType type, @NonNull String name);
+  Optional<TypeValue> findByTypeAndName(@NonNull TypeEnum type, @NonNull String name);
 
   @Override
   @NonNull @CacheEvict(value = CacheConfiguration.REFERENCE_DATA, allEntries = true)
-  <S extends LookupValue> S save(@NonNull S entity);
+  <S extends TypeValue> S save(@NonNull S entity);
 
   @Override
   @CacheEvict(value = CacheConfiguration.REFERENCE_DATA, allEntries = true)

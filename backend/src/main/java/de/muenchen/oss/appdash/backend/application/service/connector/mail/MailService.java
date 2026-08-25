@@ -1,9 +1,9 @@
 package de.muenchen.oss.appdash.backend.application.service.connector.mail;
 
 import de.muenchen.oss.appdash.backend.application.db.model.App;
-import de.muenchen.oss.appdash.backend.application.db.model.LookupValue;
 import de.muenchen.oss.appdash.backend.application.db.model.Process;
 import de.muenchen.oss.appdash.backend.application.db.model.Scan;
+import de.muenchen.oss.appdash.backend.application.db.model.TypeValue;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -134,7 +134,7 @@ public class MailService {
       return false;
     }
 
-    final LookupValue lane = process.getLane();
+    final TypeValue lane = process.getLane();
     if (lane == null || lane.getName() == null) {
       return false;
     }

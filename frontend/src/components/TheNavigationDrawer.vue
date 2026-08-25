@@ -28,7 +28,7 @@ import useHasAnyRole from "@/composables/useHasAnyRole";
 import { Role } from "@/types/Role";
 
 const showDrawer = defineModel<boolean>({ required: true });
-const showGetStarted = useHasAnyRole([Role.READER, Role.WRITER]);
+const showGetStarted = useHasAnyRole([Role.USER, Role.BETRIEB, Role.ADMIN]);
 
 const { t } = useI18n();
 </script>

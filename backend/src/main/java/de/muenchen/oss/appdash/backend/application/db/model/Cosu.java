@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -25,13 +26,13 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 @Entity
-@Table(name = "app")
+@Table(name = "cosu")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Audited
-public class App extends BaseLongEntity {
+public class Cosu extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
   @CreationTimestamp
@@ -47,20 +48,14 @@ public class App extends BaseLongEntity {
   @Column(name = "name", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String name;
 
-  @Column(name = "creator", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String creator;
-
-  @Column(name = "img", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String img;
-
   @Column(name = "description", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String description;
 
-  @Column(name = "bundle_id", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String bundleId;
+  @Column(name = "info_url", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String infoUrl;
 
-  @Column(name = "appstore_id", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String appstoreId;
+  @Column(name = "mdm", columnDefinition = Constants.COLUMN_TYPE_TEXT)
+  private String mdm;
 
   @Column(name = "e_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String eKey;
@@ -68,14 +63,10 @@ public class App extends BaseLongEntity {
   @Column(name = "epic_key", columnDefinition = Constants.COLUMN_TYPE_TEXT)
   private String epicKey;
 
-  @Column(name = "privacy_policy", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String privacyPolicy;
-
-  @Column(name = "website", columnDefinition = Constants.COLUMN_TYPE_TEXT)
-  private String website;
-
-  @Column(name = "is_internal")
-  private Boolean isInternal;
+  @ManyToOne
+  @JoinColumn(name = "number_of_users_id")
+  @Audited(targetAuditMode = NOT_AUDITED)
+  private TypeValue numberOfUsers;
 
   @ManyToOne
   @JoinColumn(name = "priority_id")
@@ -83,39 +74,40 @@ public class App extends BaseLongEntity {
   private TypeValue priority;
 
   @ManyToOne
-  @JoinColumn(name = "category_id")
+  @JoinColumn(name = "os_id")
   @Audited(targetAuditMode = NOT_AUDITED)
-  private TypeValue category;
+  private TypeValue os;
 
   @ManyToOne
-  @JoinColumn(name = "mbuc_id")
+  @JoinColumn(name = "status_id")
   @Audited(targetAuditMode = NOT_AUDITED)
-  private TypeValue mbuc;
+  private TypeValue status;
 
   @ManyToOne
-  @JoinColumn(name = "visibility_id")
+  @JoinColumn(name = "lane_id")
   @Audited(targetAuditMode = NOT_AUDITED)
-  private TypeValue visibility;
+  private TypeValue lane;
 
   @ElementCollection
-  @CollectionTable(name = "app_customer_info", joinColumns = @JoinColumn(name = "app_id"))
-  private Set<InfoMapping> customerInfos = new HashSet<>();
+  @CollectionTable(name = "cosu_comment_info", joinColumns = @JoinColumn(name = "cosu_id"))
+  private Set<InfoMapping> commentInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "app_url_info", joinColumns = @JoinColumn(name = "app_id"))
+  @CollectionTable(name = "cosu_url_info", joinColumns = @JoinColumn(name = "cosu_id"))
   private Set<InfoMapping> urlInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "app_img_info", joinColumns = @JoinColumn(name = "app_id"))
-  private Set<InfoMapping> imgInfos = new HashSet<>();
+  @CollectionTable(name = "cosu_client_info", joinColumns = @JoinColumn(name = "cosu_id"))
+  private Set<InfoMapping> clientInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "app_privacy_info", joinColumns = @JoinColumn(name = "app_id"))
-  private Set<InfoMapping> privacyInfos = new HashSet<>();
+  @CollectionTable(name = "cosu_origin_info", joinColumns = @JoinColumn(name = "cosu_id"))
+  private Set<InfoMapping> originInfos = new HashSet<>();
 
-  @ManyToMany(mappedBy = "apps")
-  private Set<Cosu> cosus = new HashSet<>();
-
-  @ManyToMany(mappedBy = "apps")
-  private Set<AppGroup> appGroups = new HashSet<>();
+  @ManyToMany
+  @JoinTable(
+      name = "cosu_assignment",
+      joinColumns = @JoinColumn(name = "cosu_id"),
+      inverseJoinColumns = @JoinColumn(name = "app_id"))
+  private Set<App> apps = new HashSet<>();
 }

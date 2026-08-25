@@ -22,7 +22,7 @@ public class TestSecurityConfiguration {
 
   private final SecurityProperties securityProperties;
 
-  private static final List<String> MOCKED_ROLES = List.of("reader", "writer");
+  private static final List<String> MOCKED_ROLES = List.of("user", "betrieb", "admin");
 
   @Bean
   public JwtDecoder mockedJwtDecoder() {

@@ -7,11 +7,11 @@
           class="my-3"
           height="200"
         />
-        <p v-if="isWriter">
-          {{ t("views.index.isWriterText") }}
+        <p v-if="isAdmin">
+          {{ t("views.index.isAdminText") }}
         </p>
         <p v-else>
-          {{ t("views.index.isNotWriterText") }}
+          {{ t("views.index.isNotAdminText") }}
         </p>
       </v-col>
 
@@ -46,7 +46,7 @@ import { Role } from "@/types/Role";
 
 const { t } = useI18n();
 
-const isWriter = useHasAnyRole(Role.WRITER);
+const isAdmin = useHasAnyRole(Role.ADMIN);
 
 const snackbarStore = useSnackbarStore();
 const apiGwStatus = ref("DOWN");
@@ -54,23 +54,25 @@ const backendStatus = ref("DOWN");
 
 onMounted(async () => {
   try {
-    const content = await checkHealth();
+    const content = await checkHealth("actuator/health");
     apiGwStatus.value = content.status;
   } catch (error) {
+    apiGwStatus.value = "DOWN";
     const err = error as Error;
     snackbarStore.push({
-      text: err.message,
+      text: `Gateway Connection Failed: ${err.message}`,
       color: STATUS_INDICATORS.ERROR,
     });
   }
 
   try {
-    const content = await checkHealth();
+    const content = await checkHealth("api/backend/actuator/health");
     backendStatus.value = (content as HealthState).status;
   } catch (error) {
+    backendStatus.value = "DOWN";
     const err = error as Error;
     snackbarStore.push({
-      text: err.message,
+      text: `Backend Connection Failed: ${err.message}`,
       color: STATUS_INDICATORS.ERROR,
     });
   }

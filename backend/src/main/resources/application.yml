@@ -122,6 +122,9 @@ management:
     metrics:
       export:
         enabled: false
+  health:
+    mail:
+      enabled: false
 
 springdoc:
   show-actuator: true

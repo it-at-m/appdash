@@ -21,8 +21,8 @@
     "index": {
       "navText": "Willkommen",
       "header": "Willkommen beim @:app.name.full von it{'@'}M",
-      "isWriterText": "writer-Rolle vorhanden",
-      "isNotWriterText": "writer-Rolle fehlt",
+      "isAdminText": "admin-Rolle vorhanden",
+      "isNotAdminText": "admin-Rolle fehlt",
       "apiGatewayStatus": "Das API-Gateway ist:",
       "backendStatus": "Das Backend ist:"
     },
