@@ -1,4 +1,4 @@
-openapi: 3.0.4
+openapi: 3.1.2
 info:
   title: appdash-backend
   description: This is the appdash backend based on the reference architecture of it@M

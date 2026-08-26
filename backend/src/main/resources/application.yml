@@ -45,17 +45,11 @@ spring:
       enabled: true
   task:
     scheduling:
-      pool:
-        size: 1
       thread-name-prefix: scheduler-
       shutdown:
         await-termination: true
         await-termination-period: 2m
     execution:
-      pool:
-        core-size: 4
-        max-size: 8
-        queue-capacity: 50
       thread-name-prefix: app-async-
       shutdown:
         await-termination: true
@@ -132,7 +126,7 @@ springdoc:
   swagger-ui:
     enabled: false
   api-docs:
-    version: openapi_3_0
+    version: openapi_3_1
     enabled: false
 
 logging:
