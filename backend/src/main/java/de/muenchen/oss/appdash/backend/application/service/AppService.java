@@ -66,7 +66,7 @@ public class AppService {
     appRepository.delete(app);
   }
 
-  private App getEntityOrThrowException(final Long appId) {
+  public App getEntityOrThrowException(final Long appId) {
     return appRepository
         .findById(appId)
         .orElseThrow(() -> new EntityNotFoundException("App with ID " + appId + " was not found"));

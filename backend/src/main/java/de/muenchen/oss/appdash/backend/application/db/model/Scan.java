@@ -58,7 +58,7 @@ public class Scan extends BaseLongEntity {
   private TypeValue provider;
 
   @ManyToOne
-  @JoinColumn(name = "process_id")
+  @JoinColumn(name = "app_process_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private Process process;
+  private AppProcess appProcess;
 }

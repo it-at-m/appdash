@@ -68,7 +68,7 @@ CREATE TABLE app_privacy_info_aud (
     PRIMARY KEY (rev, app_id, mapping_key)
 );
 
-CREATE TABLE process_aud (
+CREATE TABLE app_process_aud (
     id BIGINT NOT NULL,
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
@@ -90,84 +90,84 @@ CREATE TABLE process_aud (
     PRIMARY KEY (id, rev)
 );
 
-CREATE TABLE process_customer_info_aud (
+CREATE TABLE app_process_customer_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_url_info_aud (
+CREATE TABLE app_process_url_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_rsm_key_info_aud (
+CREATE TABLE app_process_rsm_key_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_comment_info_aud (
+CREATE TABLE app_process_comment_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_license_info_aud (
+CREATE TABLE app_process_license_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_cloud_info_aud (
+CREATE TABLE app_process_cloud_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_client_info_aud (
+CREATE TABLE app_process_client_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
-CREATE TABLE process_origin_info_aud (
+CREATE TABLE app_process_origin_info_aud (
     rev INTEGER NOT NULL REFERENCES revision_user(rev),
     revtype SMALLINT NOT NULL,
     setordinal INTEGER NOT NULL,
-    process_id BIGINT NOT NULL,
+    app_process_id BIGINT NOT NULL,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (rev, process_id, mapping_key)
+    PRIMARY KEY (rev, app_process_id, mapping_key)
 );
 
 CREATE TABLE cosu_aud (

@@ -37,7 +37,7 @@ public class TimelineEvent extends BaseLongEntity {
   private TypeValue status;
 
   @ManyToOne
-  @JoinColumn(name = "process_id", nullable = false)
+  @JoinColumn(name = "app_process_id", nullable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private Process process;
+  private AppProcess appProcess;
 }

@@ -26,13 +26,13 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 @Entity
-@Table(name = "process")
+@Table(name = "app_process")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Audited
-public class Process extends BaseLongEntity {
+public class AppProcess extends BaseLongEntity {
   private static final long serialVersionUID = 1L;
 
   @CreationTimestamp
@@ -105,34 +105,50 @@ public class Process extends BaseLongEntity {
   private App app;
 
   @ElementCollection
-  @CollectionTable(name = "process_customer_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_customer_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> customerInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_url_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_url_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> urlInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_rsm_key_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_rsm_key_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> rsmKeyInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_comment_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_comment_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> commentInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_license_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_license_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> license = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_cloud_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_cloud_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> cloudInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_client_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_client_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> clientInfos = new HashSet<>();
 
   @ElementCollection
-  @CollectionTable(name = "process_origin_info", joinColumns = @JoinColumn(name = "process_id"))
+  @CollectionTable(
+      name = "app_process_origin_info",
+      joinColumns = @JoinColumn(name = "app_process_id"))
   private Set<InfoMapping> originInfos = new HashSet<>();
 }

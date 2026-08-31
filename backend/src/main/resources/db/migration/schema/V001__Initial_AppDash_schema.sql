@@ -63,7 +63,7 @@ CREATE TABLE app_privacy_info (
     PRIMARY KEY (app_id, mapping_key)
 );
 
-CREATE TABLE process (
+CREATE TABLE app_process (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     timestamp_created TIMESTAMPTZ NOT NULL,
     timestamp_updated TIMESTAMPTZ NOT NULL,
@@ -84,68 +84,68 @@ CREATE TABLE process (
     app_id BIGINT REFERENCES app(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_process_app ON process(app_id);
-CREATE INDEX idx_process_os ON process(os_id);
-CREATE INDEX idx_process_trend ON process(trend_id);
-CREATE INDEX idx_process_num_users ON process(number_of_users_id);
-CREATE INDEX idx_process_status ON process(status_id);
-CREATE INDEX idx_process_lane ON process(lane_id);
-CREATE INDEX idx_process_viv ON process(viv_id);
+CREATE INDEX idx_app_process_app ON app_process(app_id);
+CREATE INDEX idx_app_process_os ON app_process(os_id);
+CREATE INDEX idx_app_process_trend ON app_process(trend_id);
+CREATE INDEX idx_app_process_num_users ON app_process(number_of_users_id);
+CREATE INDEX idx_app_process_status ON app_process(status_id);
+CREATE INDEX idx_app_process_lane ON app_process(lane_id);
+CREATE INDEX idx_app_process_viv ON app_process(viv_id);
 
-CREATE TABLE process_customer_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_customer_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_url_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_url_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_rsm_key_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_rsm_key_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_comment_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_comment_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_license_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_license_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_cloud_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_cloud_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_client_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_client_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
-CREATE TABLE process_origin_info (
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+CREATE TABLE app_process_origin_info (
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE,
     mapping_key VARCHAR(255) NOT NULL,
     mapping_value TEXT,
-    PRIMARY KEY (process_id, mapping_key)
+    PRIMARY KEY (app_process_id, mapping_key)
 );
 
 CREATE TABLE scan (
@@ -159,10 +159,10 @@ CREATE TABLE scan (
     cnt_files INTEGER,
     file_type_id BIGINT REFERENCES type_value(id),
     provider_id BIGINT REFERENCES type_value(id),
-    process_id BIGINT REFERENCES process(id) ON DELETE CASCADE
+    app_process_id BIGINT REFERENCES app_process(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_scan_process ON scan(process_id);
+CREATE INDEX idx_scan_app_process ON scan(app_process_id);
 CREATE INDEX idx_scan_file_type ON scan(file_type_id);
 CREATE INDEX idx_scan_provider ON scan(provider_id);
 
@@ -253,10 +253,10 @@ CREATE TABLE timeline_event (
     timestamp_start TIMESTAMPTZ NOT NULL,
     timestamp_end TIMESTAMPTZ,
     status_id BIGINT NOT NULL REFERENCES type_value(id),
-    process_id BIGINT NOT NULL REFERENCES process(id) ON DELETE CASCADE
+    app_process_id BIGINT NOT NULL REFERENCES app_process(id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_timeline_event_process ON timeline_event(process_id);
+CREATE INDEX idx_timeline_event_app_process ON timeline_event(app_process_id);
 CREATE INDEX idx_timeline_event_status ON timeline_event(status_id);
 
 CREATE TABLE ai_scan_report (

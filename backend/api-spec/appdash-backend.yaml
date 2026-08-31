@@ -357,6 +357,49 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/InfoMappingDTO"
+        appProcesses:
+          type: array
+          items:
+            $ref: "#/components/schemas/AppProcessResponseDTO"
+
+    AppProcessResponseDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        timestampCreated:
+          type: string
+          format: date-time
+        timestampUpdated:
+          type: string
+          format: date-time
+        description:
+          type: string
+        mdm:
+          type: string
+        isPilot:
+          type: boolean
+        isCritical:
+          type: boolean
+        osId:
+          type: integer
+          format: int64
+        trendId:
+          type: integer
+          format: int64
+        numberOfUsersId:
+          type: integer
+          format: int64
+        statusId:
+          type: integer
+          format: int64
+        laneId:
+          type: integer
+          format: int64
+        vivId:
+          type: integer
+          format: int64
 
     AppRevisionDTO:
       type: object

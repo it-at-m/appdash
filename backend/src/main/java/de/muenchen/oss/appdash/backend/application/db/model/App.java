@@ -4,6 +4,7 @@ import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 import de.muenchen.oss.appdash.backend.Constants;
 import de.muenchen.oss.appdash.backend.common.BaseLongEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.HashSet;
@@ -118,4 +120,7 @@ public class App extends BaseLongEntity {
 
   @ManyToMany(mappedBy = "apps")
   private Set<AppGroup> appGroups = new HashSet<>();
+
+  @OneToMany(mappedBy = "app", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<AppProcess> appProcesses = new HashSet<>();
 }

@@ -1,7 +1,7 @@
 package de.muenchen.oss.appdash.backend.application.service.connector.mail;
 
 import de.muenchen.oss.appdash.backend.application.db.model.App;
-import de.muenchen.oss.appdash.backend.application.db.model.Process;
+import de.muenchen.oss.appdash.backend.application.db.model.AppProcess;
 import de.muenchen.oss.appdash.backend.application.db.model.Scan;
 import de.muenchen.oss.appdash.backend.application.db.model.TypeValue;
 import java.util.List;
@@ -54,10 +54,10 @@ public class MailService {
   }
 
   public void sendTrendDownEmail(
-      final App app, final Process process, final Scan scan, final List<String> recipients) {
+      final App app, final AppProcess appProcess, final Scan scan, final List<String> recipients) {
     if (recipients == null || recipients.isEmpty()) return;
 
-    final String body = templateService.generateBodyForTrendDownEmail(app, process, scan);
+    final String body = templateService.generateBodyForTrendDownEmail(app, appProcess, scan);
     final String subject = "ALERT: Downward Trend Detected for " + app.getName();
 
     for (final String recipient : recipients) {
@@ -66,10 +66,10 @@ public class MailService {
   }
 
   public void sendDoneScanEmail(
-      final App app, final Process process, final Scan scan, final List<String> recipients) {
+      final App app, final AppProcess appProcess, final Scan scan, final List<String> recipients) {
     if (recipients == null || recipients.isEmpty()) return;
 
-    final String body = templateService.generateBodyForDoneScanEmail(app, process, scan);
+    final String body = templateService.generateBodyForDoneScanEmail(app, appProcess, scan);
     final String subject = "Scan Completed: " + app.getName();
 
     for (final String recipient : recipients) {
@@ -104,18 +104,18 @@ public class MailService {
       return StateEnum.ERLEDIGT.getValue();
     }
 
-    final List<ProcessReport> reports = report.getProcessReports();
+    final List<AppProcessReport> reports = report.getAppProcessReports();
     if (reports == null) {
       return StateEnum.NEU.getValue();
     }
 
-    for (final ProcessReport reportItem : reports) {
+    for (final AppProcessReport reportItem : reports) {
       if (isProductive(reportItem)) {
         return StateEnum.ERLEDIGT.getValue();
       }
     }
 
-    for (final ProcessReport reportItem : reports) {
+    for (final AppProcessReport reportItem : reports) {
       if (isReviewing(reportItem)) {
         return StateEnum.IN_REVIEW.getValue();
       }
@@ -124,17 +124,17 @@ public class MailService {
     return StateEnum.NEU.getValue();
   }
 
-  private boolean isProductive(final ProcessReport reportItem) {
+  private boolean isProductive(final AppProcessReport reportItem) {
     if (reportItem == null) {
       return false;
     }
 
-    final Process process = reportItem.getProcess();
-    if (process == null) {
+    final AppProcess appProcess = reportItem.getAppProcess();
+    if (appProcess == null) {
       return false;
     }
 
-    final TypeValue lane = process.getLane();
+    final TypeValue lane = appProcess.getLane();
     if (lane == null || lane.getName() == null) {
       return false;
     }
@@ -143,12 +143,12 @@ public class MailService {
     return PRODUCTIVE_LANES.contains(laneName);
   }
 
-  private boolean isReviewing(final ProcessReport reportItem) {
+  private boolean isReviewing(final AppProcessReport reportItem) {
     if (reportItem == null) {
       return false;
     }
 
-    final Process process = reportItem.getProcess();
-    return process != null && process.getTrend() != null;
+    final AppProcess appProcess = reportItem.getAppProcess();
+    return appProcess != null && appProcess.getTrend() != null;
   }
 }

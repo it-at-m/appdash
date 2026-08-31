@@ -14,7 +14,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(
     componentModel = "spring",
-    uses = {ReferenceMapper.class, DateTimeMapper.class})
+    uses = {ReferenceMapper.class, DateTimeMapper.class, AppProcessMapper.class})
 public interface AppMapper {
   @Mapping(target = "priorityId", source = "priority.id")
   @Mapping(target = "categoryId", source = "category.id")
@@ -33,6 +33,7 @@ public interface AppMapper {
   @Mapping(target = "timestampUpdated", ignore = true)
   @Mapping(target = "cosus", ignore = true)
   @Mapping(target = "appGroups", ignore = true)
+  @Mapping(target = "appProcesses", ignore = true)
   App toEntity(AppRequestDTO dto);
 
   @InheritConfiguration(name = "toEntity")

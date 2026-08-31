@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DateTimeMapper {
-
   public OffsetDateTime toOffsetDateTime(final Instant instant) {
     return instant != null ? instant.atOffset(ZoneOffset.UTC) : null;
   }

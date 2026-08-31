@@ -1,9 +1,6 @@
-import type {
-  HTTPHeaders,
-  RequestContext,
-} from "@/api/generated/appdash-backend";
+import type { RequestContext } from "@/api/generated/appdash-backend";
 
-import { getHeaders } from "@/api/fetch-utils.ts";
+import { getSecurityHeaders } from "@/api/fetch-utils.ts";
 import { BaseAPI, Configuration } from "@/api/generated/appdash-backend";
 import { BASE_API_PATH } from "@/constants.ts";
 
@@ -29,12 +26,11 @@ function createConfig(): Configuration {
     middleware: [
       {
         pre: async (context: RequestContext) => {
-          const freshHeaders = convertHeaders(getHeaders());
           return {
             url: context.url,
             init: {
               ...context.init,
-              headers: { ...context.init.headers, ...freshHeaders },
+              headers: { ...context.init.headers, ...getSecurityHeaders() },
             },
           };
         },
@@ -57,19 +53,6 @@ function getInstance<T extends BaseAPI>(ApiClass: ApiCtor<T>): T {
   const api = new ApiClass(createConfig());
   instances.set(ApiClass, api);
   return api;
-}
-
-/**
- * Converts a Headers object into a simple key-value pair object.
- * @param {Headers} headers - The headers object to be converted.
- * @returns {HTTPHeaders} An object with the same headers.
- */
-function convertHeaders(headers: Headers): HTTPHeaders {
-  const httpHeaders: HTTPHeaders = {};
-  headers.forEach((value, key) => {
-    httpHeaders[key] = value;
-  });
-  return httpHeaders;
 }
 
 export const ApiFactory = {
