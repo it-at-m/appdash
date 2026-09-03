@@ -54,7 +54,7 @@ const backendStatus = ref("DOWN");
 
 onMounted(async () => {
   try {
-    const content = await checkHealth("actuator/health");
+    const content = await checkHealth("/actuator/health");
     apiGwStatus.value = content.status;
   } catch (error) {
     apiGwStatus.value = "DOWN";
@@ -66,7 +66,7 @@ onMounted(async () => {
   }
 
   try {
-    const content = await checkHealth("api/backend/actuator/health");
+    const content = await checkHealth("/api/backend/actuator/health");
     backendStatus.value = (content as HealthState).status;
   } catch (error) {
     backendStatus.value = "DOWN";
